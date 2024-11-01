@@ -1,9 +1,15 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
+
+import { register } from "./ctrlers";
 
 const app = new Elysia()
   .get("/", () => "Hello Elysia")
-  .post("/user/register", () => {
-    return { success: true };
+  .post("/user/register", ({ body }) => register(body), {
+    body: t.Object({
+      name: t.String(),
+      email: t.String(),
+      password: t.String(),
+    }),
   })
   .post("/user/login", () => {
     return { success: true };
@@ -12,6 +18,6 @@ const app = new Elysia()
     return { success: true };
   });
 
-app.listen(3000);
+app.listen(1863);
 
-console.log(`Elys is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(`Running at ${app.server?.hostname}:${app.server?.port}`);
