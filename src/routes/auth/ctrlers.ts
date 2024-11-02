@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import prismadb from "../libs/prismadb";
-import { RegisterReqBody, LoginReq } from "../types";
+import prismadb from "@/libs/prismadb";
+import { RegisterReqBody, LoginReq } from "@/types";
 
 const saltRounds = 10;
 

@@ -1,9 +1,10 @@
-import { Elysia, t } from "elysia";
-import { register, login } from "./ctrlers";
-import { jwtConfig } from "../libs/jwt";
-import { LoginReq } from "../types";
+import { Elysia } from "elysia";
+import { jwtConfig } from "@/libs/jwt";
+import authRoutes from "./routes/auth";
+import cors from "@elysiajs/cors";
 
 const app = new Elysia()
+  .use(cors())
   .use(jwtConfig)
   .derive(async ({ headers, jwt_auth }) => {
     const auth_header = headers["authorization"];
@@ -25,16 +26,7 @@ const app = new Elysia()
     },
     (app) => app.get("/", () => "Hello Elysia")
   )
-  .post("/auth/register", ({ body }) => register(body), {
-    body: t.Object({
-      name: t.String(),
-      email: t.String(),
-      password: t.String(),
-    }),
-  })
-  .post("/auth/login", (login_req: LoginReq) => login(login_req), {
-    body: t.Object({ email: t.String(), password: t.String() }),
-  });
+  .use(authRoutes);
 
 app.listen(1863);
 
