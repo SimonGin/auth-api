@@ -1,3 +1,4 @@
+import type { Context } from "elysia";
 import { Elysia } from "elysia";
 import { jwtConfig } from "@/libs/jwt";
 import prismadb from "@/libs/prismadb";
